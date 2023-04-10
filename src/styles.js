@@ -51,10 +51,11 @@ export const Footer = styled.div`
     padding-top: 5px;
 `
 
-export const Input = styled.input`
-    height: 50px;
-    width: 85%;
-    padding-left: 20px;
+export const Input = styled.textarea`
+    height: 35px;
+    width: 83%;
+    padding: 15px 20px 0 20px;
+    resize: none;
     border: none;
     background-color: ${colors.white};
     border-radius: 20px;

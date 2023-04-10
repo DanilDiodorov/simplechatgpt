@@ -28,7 +28,10 @@ const App = () => {
     }
 
     const enterHandler = (e) => {
-        if (e.keyCode === 13) sendHandler()
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            sendHandler()
+        }
     }
 
     useEffect(() => {
