@@ -1,9 +1,9 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
-const colors = {
+export const colors = {
     blue: '#2155BF',
     white: '#fff',
-    grey: '#F3F6FF',
+    grey: '#ECEFF8',
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -30,6 +30,8 @@ export const Chat = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px 20px 0 20px;
+    z-index: 1;
+    box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
 `
 
 export const Messages = styled.div`
@@ -92,4 +94,9 @@ export const Message = styled.div`
     color: ${({ isMy }) => (isMy ? colors.white : 'black')};
     margin-top: 10px;
     white-space: pre-wrap;
+`
+
+export const Canvas = styled.canvas`
+    position: absolute;
+    z-index: 0;
 `

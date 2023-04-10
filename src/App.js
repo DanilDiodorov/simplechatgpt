@@ -5,6 +5,7 @@ import { socket } from './socket'
 import { useEffect } from 'react'
 import Loader from './Loader'
 import { animateScroll } from 'react-scroll'
+import game from './particles'
 
 const App = () => {
     const [text, setText] = useState('')
@@ -35,6 +36,10 @@ const App = () => {
     }
 
     useEffect(() => {
+        game()
+    }, [])
+
+    useEffect(() => {
         socket.on('message', (data) => {
             setLoading(false)
             setMessages([
@@ -61,6 +66,7 @@ const App = () => {
 
     return (
         <S.Main>
+            <S.Canvas id="canvas"></S.Canvas>
             <S.Chat>
                 <S.Messages id="ContainerElementID">
                     {messages.map((message) => (
