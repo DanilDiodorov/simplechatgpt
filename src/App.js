@@ -5,10 +5,13 @@ import { useEffect } from 'react'
 import Loader from './Loader'
 import { animateScroll } from 'react-scroll'
 import { io } from 'socket.io-client'
+import randomstring from 'randomstring'
 
 let messagesTemp = []
 let isMounted = false
 let socket
+let uid = randomstring.generate()
+
 const App = () => {
     const [text, setText] = useState('')
     const [messages, setMessages] = useState([])
@@ -26,7 +29,7 @@ const App = () => {
                 },
             ]
             setMessages(messagesTemp)
-            socket.emit('message', text)
+            socket.emit('message', { uid, text })
             setLoading(true)
             setText('')
         }
@@ -39,6 +42,10 @@ const App = () => {
         socket.emit('delete')
     }
 
+    const handleTabClose = (e) => {
+        socket.emit('deleteUser', uid)
+    }
+
     const enterHandler = (e) => {
         if (e.keyCode === 13) {
             e.preventDefault()
@@ -48,6 +55,8 @@ const App = () => {
 
     useEffect(() => {
         if (isMounted === false) {
+            window.addEventListener('beforeunload', handleTabClose)
+            setMessages(messagesTemp)
             socket = io(
                 process.env.NODE_ENV === 'production'
                     ? 'https://simplechatgpt-api.onrender.com'
@@ -59,15 +68,17 @@ const App = () => {
                 }
             )
             socket.on('message', (data) => {
-                setLoading(false)
-                messagesTemp = [
-                    ...messagesTemp,
-                    {
-                        isMy: false,
-                        text: data,
-                    },
-                ]
-                setMessages(messagesTemp)
+                if (data.uid === uid) {
+                    setLoading(false)
+                    messagesTemp = [
+                        ...messagesTemp,
+                        {
+                            isMy: false,
+                            text: data.message,
+                        },
+                    ]
+                    setMessages(messagesTemp)
+                }
             })
             socket.on('connect_error', () => {
                 setLoading(true)
@@ -80,29 +91,7 @@ const App = () => {
                 ]
                 setMessages(messagesTemp)
                 setLoading(true)
-            })
-            socket.on('disconnect', () => {
-                setLoading(true)
-                messagesTemp = [
-                    ...messagesTemp,
-                    {
-                        isMy: false,
-                        text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
-                    },
-                ]
-                setMessages(messagesTemp)
-                setLoading(true)
-            })
-            socket.io.on('reconnect', () => {
-                messagesTemp = [
-                    ...messagesTemp,
-                    {
-                        isMy: false,
-                        text: 'Соединение восстановлено!',
-                    },
-                ]
-                setLoading(false)
-                setMessages(messagesTemp)
+                socket.connect()
             })
         }
         isMounted = true
