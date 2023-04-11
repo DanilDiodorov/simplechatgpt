@@ -12,6 +12,7 @@ const App = () => {
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
     const [canSend, setCanSend] = useState(true)
+    const [contextMenu, setContextMenu] = useState(false)
 
     const sendHandler = () => {
         if (canSend) {
@@ -26,6 +27,12 @@ const App = () => {
             setLoading(true)
             setText('')
         }
+    }
+
+    const deleteHandler = () => {
+        setMessages([])
+        setContextMenu(false)
+        socket.emit('delete')
     }
 
     const enterHandler = (e) => {
@@ -68,6 +75,29 @@ const App = () => {
         <S.Main>
             <S.Canvas id="canvas"></S.Canvas>
             <S.Chat>
+                <S.Header>
+                    <S.HeaderLeft>
+                        <S.HeaderImage src="https://ujasntkfphywizsdaapi.supabase.co/storage/v1/render/image/public/content/app_logos/ac41ab08-934f-44e3-bc01-655b17404600.png?width=900&height=0&quality=85&resize=contain" />
+                        <S.HeaderNameStatus>
+                            <S.HeaderName>Karen</S.HeaderName>
+                            <S.HeaderStatus>online</S.HeaderStatus>
+                        </S.HeaderNameStatus>
+                    </S.HeaderLeft>
+                    <S.HeaderRight>
+                        <S.MoreIcon
+                            onClick={() => setContextMenu(!contextMenu)}
+                        />
+                        <S.ContextMenu contextMenu={contextMenu}>
+                            <S.ContextMenuList>
+                                <S.ContextMenuItem
+                                    onClick={() => deleteHandler()}
+                                >
+                                    Удалить
+                                </S.ContextMenuItem>
+                            </S.ContextMenuList>
+                        </S.ContextMenu>
+                    </S.HeaderRight>
+                </S.Header>
                 <S.Messages id="ContainerElementID">
                     {messages.map((message) => (
                         <S.Message isMy={message.isMy}>

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 export const colors = {
     blue: '#2155BF',
@@ -10,6 +11,10 @@ export const GlobalStyle = createGlobalStyle`
     body{
         margin: 0;
         padding: 0;
+        overflow: hidden;
+    }
+    * {
+        font-family: 'Open Sans', sans-serif;
     }
 `
 
@@ -19,7 +24,7 @@ export const Main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${colors.blue};
+    overflow: hidden;
 `
 
 export const Chat = styled.div`
@@ -99,4 +104,59 @@ export const Message = styled.div`
 export const Canvas = styled.canvas`
     position: absolute;
     z-index: 0;
+`
+
+export const Header = styled.div`
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+`
+export const HeaderImage = styled.img`
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+`
+export const HeaderLeft = styled.div`
+    display: flex;
+    align-items: center;
+`
+export const HeaderRight = styled.div``
+export const HeaderNameStatus = styled.div`
+    margin-left: 15px;
+`
+export const HeaderName = styled.div`
+    font-size: 18px;
+    font-weight: 500;
+`
+export const HeaderStatus = styled.div`
+    color: grey;
+    font-size: 14px;
+`
+export const ContextMenu = styled.div`
+    display: ${({ contextMenu }) => (contextMenu ? 'block' : 'none')};
+    width: 100px;
+    background-color: ${colors.white};
+    position: absolute;
+    border-radius: 10px;
+    margin-left: -80px;
+`
+export const ContextMenuList = styled.ul`
+    padding: 0;
+    margin: 0;
+    list-style: none;
+`
+export const ContextMenuItem = styled.li`
+    padding: 15px;
+    border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: #c0c0c0;
+    }
+`
+export const MoreIcon = styled(MoreVertIcon)`
+    &:hover {
+        cursor: pointer;
+    }
 `

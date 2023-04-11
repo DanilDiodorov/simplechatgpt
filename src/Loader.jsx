@@ -32,42 +32,12 @@ const DotCont = styled.div`
 `
 
 const Dot = styled.div`
-    width: 14px;
-    height: 14px;
+    width: 0;
+    height: 0;
     border-radius: 50%;
     background-color: grey;
 `
-const Dot1Keyframes = keyframes`
-    0% {
-        width: 0;
-        height: 0;
-    }
-    50% {
-        width: 14px;
-        height: 14px;
-    }
-    100% {
-        width: 0;
-        height: 0;
-    }
-`
-
-const Dot2Keyframes = keyframes`
-    0% {
-        width: 0;
-        height: 0;
-    }
-    50% {
-        width: 14px;
-        height: 14px;
-    }
-    100% {
-        width: 0;
-        height: 0;
-    }
-`
-
-const Dot3Keyframes = keyframes`
+const DotKeyframes = keyframes`
     0% {
         width: 0;
         height: 0;
@@ -83,16 +53,16 @@ const Dot3Keyframes = keyframes`
 `
 
 const Dot1 = styled(Dot)`
-    animation: ${Dot1Keyframes} 2s linear infinite;
+    animation: ${DotKeyframes} 2s linear infinite;
 `
 
 const Dot2 = styled(Dot)`
-    animation: ${Dot2Keyframes} 2s linear infinite;
+    animation: ${DotKeyframes} 2s linear infinite;
     animation-delay: 0.3s;
 `
 
 const Dot3 = styled(Dot)`
-    animation: ${Dot3Keyframes} 2s linear infinite;
+    animation: ${DotKeyframes} 2s linear infinite;
     animation-delay: 0.6s;
 `
 
