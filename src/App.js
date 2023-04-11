@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import * as S from './styles'
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
-import { socket } from './socket'
 import { useEffect } from 'react'
 import Loader from './Loader'
 import { animateScroll } from 'react-scroll'
-import game from './particles'
+import { io } from 'socket.io-client'
 
+let messagesTemp = []
+let isMounted = false
+let socket
 const App = () => {
     const [text, setText] = useState('')
     const [messages, setMessages] = useState([])
@@ -16,13 +18,14 @@ const App = () => {
 
     const sendHandler = () => {
         if (canSend) {
-            setMessages([
+            messagesTemp = [
                 ...messages,
                 {
                     isMy: true,
                     text,
                 },
-            ])
+            ]
+            setMessages(messagesTemp)
             socket.emit('message', text)
             setLoading(true)
             setText('')
@@ -31,6 +34,7 @@ const App = () => {
 
     const deleteHandler = () => {
         setMessages([])
+        messagesTemp = []
         setContextMenu(false)
         socket.emit('delete')
     }
@@ -43,21 +47,28 @@ const App = () => {
     }
 
     useEffect(() => {
-        game()
+        if (isMounted === false) {
+            socket = io(
+                process.env.NODE_ENV === 'production'
+                    ? 'https://simplechatgpt-api.onrender.com'
+                    : 'http://localhost:10000'
+            )
+            socket.on('message', (data) => {
+                setLoading(false)
+                messagesTemp = [
+                    ...messagesTemp,
+                    {
+                        isMy: false,
+                        text: data,
+                    },
+                ]
+                setMessages(messagesTemp)
+            })
+        }
+        isMounted = true
     }, [])
 
     useEffect(() => {
-        socket.on('message', (data) => {
-            setLoading(false)
-            setMessages([
-                ...messages,
-                {
-                    isMy: false,
-                    text: data,
-                },
-            ])
-        })
-
         setTimeout(() => {
             animateScroll.scrollToBottom({
                 smooth: true,
@@ -73,7 +84,7 @@ const App = () => {
 
     return (
         <S.Main>
-            <S.Canvas id="canvas"></S.Canvas>
+            <S.BGImage src="https://catherineasquithgallery.com/uploads/posts/2021-02/1613680438_26-p-fon-dlya-prezentatsii-programmirovanie-32.png" />
             <S.Chat>
                 <S.Header>
                     <S.HeaderLeft>

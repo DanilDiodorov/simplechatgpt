@@ -27,6 +27,11 @@ export const Main = styled.div`
     overflow: hidden;
 `
 
+export const BGImage = styled.img`
+    position: absolute;
+    width: 100vw;
+`
+
 export const Chat = styled.div`
     width: 600px;
     height: 95%;
@@ -36,7 +41,13 @@ export const Chat = styled.div`
     flex-direction: column;
     padding: 10px 20px 0 20px;
     z-index: 1;
-    box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
+    box-shadow: 0 0 40px rgb(0, 0, 0, 0.3);
+
+    @media (max-width: 700px) {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
 `
 
 export const Messages = styled.div`

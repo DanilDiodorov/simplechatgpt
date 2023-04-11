@@ -8,13 +8,18 @@ function game() {
 
         particleCount: 35,
         particleRadius: 5,
-        particleSpeed: 2,
+        particleSpeed: 1,
         particleColour: 'white',
 
         maxDistance: 300,
         lineColour: 'rgba(255, 255, 255, ',
         lineWidth: 3,
     }
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+    })
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
