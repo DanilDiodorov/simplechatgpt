@@ -64,6 +64,30 @@ const App = () => {
                 ]
                 setMessages(messagesTemp)
             })
+            socket.on('connect_error', () => {
+                messagesTemp = [
+                    ...messagesTemp,
+                    {
+                        isMy: false,
+                        text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
+                    },
+                ]
+                setMessages(messagesTemp)
+                setLoading(false)
+                socket.connect()
+            })
+            socket.on('disconnect', () => {
+                messagesTemp = [
+                    ...messagesTemp,
+                    {
+                        isMy: false,
+                        text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
+                    },
+                ]
+                setMessages(messagesTemp)
+                setLoading(false)
+                socket.connect()
+            })
         }
         isMounted = true
     }, [])
