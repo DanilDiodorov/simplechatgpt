@@ -81,29 +81,29 @@ const App = () => {
                 setMessages(messagesTemp)
                 setLoading(true)
             })
-            // socket.on('disconnect', () => {
-            //     setLoading(true)
-            //     messagesTemp = [
-            //         ...messagesTemp,
-            //         {
-            //             isMy: false,
-            //             text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
-            //         },
-            //     ]
-            //     setMessages(messagesTemp)
-            //     setLoading(true)
-            // })
-            // socket.io.on('reconnect', () => {
-            //     messagesTemp = [
-            //         ...messagesTemp,
-            //         {
-            //             isMy: false,
-            //             text: 'Соединение восстановлено!',
-            //         },
-            //     ]
-            //     setLoading(false)
-            //     setMessages(messagesTemp)
-            // })
+            socket.on('disconnect', () => {
+                setLoading(true)
+                messagesTemp = [
+                    ...messagesTemp,
+                    {
+                        isMy: false,
+                        text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
+                    },
+                ]
+                setMessages(messagesTemp)
+                setLoading(true)
+            })
+            socket.io.on('reconnect', () => {
+                messagesTemp = [
+                    ...messagesTemp,
+                    {
+                        isMy: false,
+                        text: 'Соединение восстановлено!',
+                    },
+                ]
+                setLoading(false)
+                setMessages(messagesTemp)
+            })
         }
         isMounted = true
     }, [])
