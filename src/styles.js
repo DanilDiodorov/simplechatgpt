@@ -19,8 +19,9 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 export const Main = styled.div`
-    width: 100vw;
-    height: 100vh;
+    width: ${window.innerWidth}px;
+    height: ${window.innerHeight}px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,6 +31,9 @@ export const Main = styled.div`
 export const BGImage = styled.img`
     position: absolute;
     width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
 `
 
 export const Chat = styled.div`
@@ -39,13 +43,13 @@ export const Chat = styled.div`
     border-radius: 40px;
     display: flex;
     flex-direction: column;
-    padding: 10px 20px 0 20px;
+    padding-top: 10px;
     z-index: 1;
     box-shadow: 0 0 40px rgb(0, 0, 0, 0.3);
 
     @media (max-width: 700px) {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         border-radius: 0;
     }
 `
@@ -56,6 +60,8 @@ export const Messages = styled.div`
     flex-direction: column;
     overflow-y: auto;
     scrollbar-width: thin;
+    padding-left: 20px;
+    padding-right: 20px;
     &::-webkit-scrollbar {
         width: 0;
         height: 0;
@@ -65,8 +71,7 @@ export const Messages = styled.div`
 export const Footer = styled.div`
     display: flex;
     justify-content: space-between;
-    padding-bottom: 20px;
-    padding-top: 5px;
+    padding: 5px 20px 20px 20px;
 `
 
 export const Input = styled.textarea`
@@ -82,6 +87,10 @@ export const Input = styled.textarea`
 
     &:focus {
         outline: none;
+    }
+
+    @media (max-width: 700px) {
+        width: 70%;
     }
 `
 
@@ -122,7 +131,7 @@ export const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 30px;
 `
 export const HeaderImage = styled.img`
     height: 50px;

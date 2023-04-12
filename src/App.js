@@ -73,6 +73,11 @@ const App = () => {
                     )
             }, 500)
             window.addEventListener('beforeunload', handleTabClose)
+            window.addEventListener('resize', () => {
+                let main = document.querySelector('.main')
+                main.style.width = window.innerWidth + 'px'
+                main.style.height = window.innerHeight + 'px'
+            })
             setMessages(messagesTemp)
             socket = io(
                 process.env.NODE_ENV === 'production'
@@ -83,8 +88,8 @@ const App = () => {
                     reconnectionDelay: 1000, // Задержка между попытками переподключения
                 }
             )
-            socket.on('message', (data, callBack) => {
-                if (data.uid === uid) {
+            socket.on('message', (data) => {
+                if (data.uid === uid && waiting === true) {
                     setLoading(false)
                     messagesTemp = [
                         ...messagesTemp,
@@ -148,7 +153,7 @@ const App = () => {
     }, [loading, text])
 
     return (
-        <S.Main>
+        <S.Main className="main">
             <S.BGImage src="https://catherineasquithgallery.com/uploads/posts/2021-02/1613680438_26-p-fon-dlya-prezentatsii-programmirovanie-32.png" />
             <S.Chat>
                 <S.Header>
