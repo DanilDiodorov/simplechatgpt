@@ -120,7 +120,7 @@ const App = () => {
                         },
                     ]
                     setMessages(messagesTemp)
-                    setLoading(false)
+                    if (!isSending) setLoading(false)
                     reconnecting = null
                 }
                 setStatus('online')
