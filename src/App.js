@@ -11,6 +11,9 @@ let messagesTemp = []
 let isMounted = false
 let socket
 let uid = randomstring.generate()
+let isSending = false
+let currentMessage = ''
+let reconnecting = null
 
 const App = () => {
     const [text, setText] = useState('')
@@ -28,8 +31,9 @@ const App = () => {
                     text,
                 },
             ]
+            currentMessage = text
             setMessages(messagesTemp)
-            socket.emit('message', { uid, text })
+            isSending = true
             setLoading(true)
             setText('')
         }
@@ -39,7 +43,7 @@ const App = () => {
         setMessages([])
         messagesTemp = []
         setContextMenu(false)
-        socket.emit('delete')
+        socket.emit('delete', uid)
     }
 
     const handleTabClose = (e) => {
@@ -55,6 +59,16 @@ const App = () => {
 
     useEffect(() => {
         if (isMounted === false) {
+            setInterval(() => {
+                if (isSending)
+                    socket.emit(
+                        'message',
+                        { uid, text: currentMessage },
+                        (response) => {
+                            if (response === 'recieved') isSending = false
+                        }
+                    )
+            }, 500)
             window.addEventListener('beforeunload', handleTabClose)
             setMessages(messagesTemp)
             socket = io(
@@ -63,11 +77,10 @@ const App = () => {
                     : 'http://localhost:10000',
                 {
                     reconnection: true, // Включить повторное подключение
-                    reconnectionAttempts: 10, // Количество попыток переподключения
                     reconnectionDelay: 1000, // Задержка между попытками переподключения
                 }
             )
-            socket.on('message', (data) => {
+            socket.on('message', (data, callBack) => {
                 if (data.uid === uid) {
                     setLoading(false)
                     messagesTemp = [
@@ -77,24 +90,41 @@ const App = () => {
                             text: data.message,
                         },
                     ]
+                    socket.emit('recieved', uid)
                     setMessages(messagesTemp)
                 }
             })
             socket.on('connect_error', () => {
-                setLoading(true)
-                messagesTemp = [
-                    ...messagesTemp,
-                    {
-                        isMy: false,
-                        text: 'Извините, произошла ошибка подключения к серверу. Идет повторное подключение...\n\n\nОбратите внимание, что контекст был потерян.',
-                    },
-                ]
-                setMessages(messagesTemp)
-                setLoading(true)
-                socket.connect()
+                if (reconnecting === null) {
+                    messagesTemp = [
+                        ...messagesTemp,
+                        {
+                            isMy: false,
+                            text: 'Извините, произошла ошибка подключения к серверу.\n\nИдет повторное подключение...',
+                        },
+                    ]
+                    setMessages(messagesTemp)
+                    setLoading(true)
+                    reconnecting = true
+                }
+            })
+            socket.io.on('reconnect', () => {
+                if (reconnecting === true) {
+                    messagesTemp = [
+                        ...messagesTemp,
+                        {
+                            isMy: false,
+                            text: 'Соединение восстановлено!',
+                        },
+                    ]
+                    setMessages(messagesTemp)
+                    setLoading(false)
+                    reconnecting = null
+                }
             })
         }
         isMounted = true
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
