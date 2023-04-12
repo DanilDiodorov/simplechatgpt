@@ -65,6 +65,10 @@ export const Messages = styled.div`
         width: 0;
         height: 0;
     }
+    @media (max-width: 700px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 `
 
 export const Footer = styled.div`
@@ -179,6 +183,7 @@ export const ContextMenuItem = styled.li`
     }
 `
 export const MoreIcon = styled(MoreVertIcon)`
+    margin-top: 10px;
     &:hover {
         cursor: pointer;
     }

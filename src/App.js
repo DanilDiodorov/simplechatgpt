@@ -166,6 +166,7 @@ const App = () => {
                     </S.HeaderLeft>
                     <S.HeaderRight>
                         <S.MoreIcon
+                            sx={{ fontSize: 40 }}
                             onClick={() => setContextMenu(!contextMenu)}
                         />
                         <S.ContextMenu contextMenu={contextMenu}>
