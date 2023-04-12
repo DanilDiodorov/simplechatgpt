@@ -43,10 +43,9 @@ export const Chat = styled.div`
     border-radius: 40px;
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
     z-index: 1;
     box-shadow: 0 0 40px rgb(0, 0, 0, 0.3);
-
+    overflow: hidden;
     @media (max-width: 700px) {
         width: 100%;
         height: 100%;
@@ -119,6 +118,9 @@ export const Message = styled.div`
     color: ${({ isMy }) => (isMy ? colors.white : 'black')};
     margin-top: 10px;
     white-space: pre-wrap;
+    @media (max-width: 700px) {
+        max-width: 80%;
+    }
 `
 
 export const Canvas = styled.canvas`
@@ -132,6 +134,7 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 10px 30px;
+    border-bottom: 1px solid #ccc;
 `
 export const HeaderImage = styled.img`
     height: 50px;
