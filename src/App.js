@@ -14,6 +14,7 @@ let uid = randomstring.generate()
 let isSending = false
 let currentMessage = ''
 let reconnecting = null
+let waiting = false
 
 const App = () => {
     const [text, setText] = useState('')
@@ -37,6 +38,7 @@ const App = () => {
             isSending = true
             setLoading(true)
             setText('')
+            waiting = true
         }
     }
 
@@ -92,6 +94,7 @@ const App = () => {
                         },
                     ]
                     socket.emit('recieved', uid)
+                    waiting = false
                     setMessages(messagesTemp)
                 }
             })
@@ -120,7 +123,7 @@ const App = () => {
                         },
                     ]
                     setMessages(messagesTemp)
-                    if (!isSending) setLoading(false)
+                    if (!waiting) setLoading(false)
                     reconnecting = null
                 }
                 setStatus('online')
