@@ -16,6 +16,8 @@ let isSending = false
 let currentMessage = ''
 let reconnecting = null
 let waiting = false
+let newMessage = []
+let recievingMessage = ''
 
 const App = () => {
     const [text, setText] = useState('')
@@ -26,7 +28,7 @@ const App = () => {
     const [status, setStatus] = useState('online')
 
     const sendHandler = () => {
-        if (canSend) {
+        if (canSend && !waiting) {
             messagesTemp = [
                 ...messages,
                 {
@@ -90,18 +92,37 @@ const App = () => {
                 }
             )
             socket.on('message', (data) => {
-                if (data.uid === uid && waiting === true) {
-                    setLoading(false)
-                    messagesTemp = [
-                        ...messagesTemp,
-                        {
-                            isMy: false,
-                            text: data.message,
-                        },
-                    ]
-                    socket.emit('recieved', uid)
-                    waiting = false
-                    setMessages(messagesTemp)
+                // if (data.uid === uid && waiting === true) {
+                //     setLoading(false)
+                //     messagesTemp = [
+                //         ...messagesTemp,
+                //         {
+                //             isMy: false,
+                //             text: data.message,
+                //         },
+                //     ]
+                //     socket.emit('recieved', uid)
+                //     waiting = false
+                //     setMessages(messagesTemp)
+                // }
+                if (data.uid === uid) {
+                    if (data.message !== null) {
+                        setLoading(false)
+                        recievingMessage += data.message
+                        newMessage = [
+                            ...messagesTemp,
+                            {
+                                isMy: false,
+                                text: recievingMessage,
+                            },
+                        ]
+                        setMessages(newMessage)
+                    } else {
+                        messagesTemp = newMessage
+                        socket.emit('recieved', uid)
+                        waiting = false
+                        recievingMessage = ''
+                    }
                 }
             })
             socket.on('connect_error', () => {
@@ -150,7 +171,8 @@ const App = () => {
     }, [messages])
 
     useEffect(() => {
-        if (loading === true || text.trim() === '') setCanSend(false)
+        if (loading === true || text.trim() === '' || waiting === true)
+            setCanSend(false)
         else setCanSend(true)
     }, [loading, text])
 
