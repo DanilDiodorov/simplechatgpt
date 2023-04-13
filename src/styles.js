@@ -74,7 +74,11 @@ export const Messages = styled.div`
 export const Footer = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 5px 20px 20px 20px;
+    padding: 3px 20px 20px 20px;
+
+    @media (max-width: 700px) {
+        padding: 3px 10px 20px 10px;
+    }
 `
 
 export const Input = styled.textarea`
@@ -93,7 +97,7 @@ export const Input = styled.textarea`
     }
 
     @media (max-width: 700px) {
-        width: 70%;
+        width: 75%;
     }
 `
 
@@ -139,6 +143,10 @@ export const Header = styled.div`
     justify-content: space-between;
     padding: 10px 30px;
     border-bottom: 1px solid #ccc;
+
+    @media (max-width: 700px) {
+        padding: 5px 20px;
+    }
 `
 export const HeaderImage = styled.img`
     height: 50px;
