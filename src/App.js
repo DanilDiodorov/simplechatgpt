@@ -6,6 +6,7 @@ import Loader from './Loader'
 import { animateScroll } from 'react-scroll'
 import { io } from 'socket.io-client'
 import randomstring from 'randomstring'
+import game from './particles'
 
 let messagesTemp = []
 let isMounted = false
@@ -133,6 +134,7 @@ const App = () => {
                 }
                 setStatus('online')
             })
+            game()
         }
         isMounted = true
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +156,8 @@ const App = () => {
 
     return (
         <S.Main className="main">
-            <S.BGImage src="https://catherineasquithgallery.com/uploads/posts/2021-02/1613680438_26-p-fon-dlya-prezentatsii-programmirovanie-32.png" />
+            {/* <S.BGImage src="https://trafaret-decor.ru/sites/default/files/2022-12/Технический%20фон%20%283%29.jpg" /> */}
+            <S.Canvas id="canvas"></S.Canvas>
             <S.Chat>
                 <S.Header>
                     <S.HeaderLeft>

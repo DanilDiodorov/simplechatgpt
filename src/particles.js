@@ -6,14 +6,14 @@ function game() {
     var options = {
         backgroundColour: '#1F9BED',
 
-        particleCount: 35,
+        particleCount: 80,
         particleRadius: 5,
         particleSpeed: 1,
         particleColour: 'white',
 
-        maxDistance: 300,
+        maxDistance: 150,
         lineColour: 'rgba(255, 255, 255, ',
-        lineWidth: 3,
+        lineWidth: 2,
     }
 
     window.addEventListener('resize', () => {
@@ -96,54 +96,13 @@ function game() {
             }
         }
     }
-    // document.addEventListener("keydown", function(e){
-    // 	if (e.keyCode == 38 && (particles[0].speed < 5 || particles[0].speed > -1)){
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			if (particles[i].speed > 0){
-    // 				particles[i].speed++;
-    // 			}
-    // 			else{
-    // 				particles[i].speed--;
-    // 			}
-    // 		}
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			particles[i].coords = {
-    // 				x: particles[i].speed * Math.cos(particles[i].angle),
-    // 				y: particles[i].speed * Math.sin(particles[i].angle)
-    // 			}
-    // 		}
-    // 	}
-    // 	else if (e.keyCode == 40 && (particles[0].speed > 1 || particles[0].speed > -5)){
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			if (particles[i].speed > 0){
-    // 				particles[i].speed--;
-    // 			}
-    // 			else{
-    // 				particles[i].speed++;
-    // 			}
-    // 		}
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			particles[i].coords = {
-    // 				x: particles[i].speed * Math.cos(particles[i].angle),
-    // 				y: particles[i].speed * Math.sin(particles[i].angle)
-    // 			}
-    // 		}
-    // 	}
-    // 	else if (e.keyCode == 39){
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			particles[i].speed *= -1;
-    // 		}
-    // 		for (var i = 0; i < options.particleCount; i++){
-    // 			particles[i].coords = {
-    // 				x: particles[i].speed * Math.cos(particles[i].angle),
-    // 				y: particles[i].speed * Math.sin(particles[i].angle)
-    // 			}
-    // 		}
-    // 	}
-    // });
+    let bgImage = new Image()
+    bgImage.src =
+        'https://catherineasquithgallery.com/uploads/posts/2021-02/1613215102_215-p-foni-sinii-256.jpg'
     function loop() {
-        context.fillStyle = options.backgroundColour
-        context.fillRect(0, 0, canvasWidth, canvasHeight)
+        // context.fillStyle = options.backgroundColour
+        // context.fillRect(0, 0, canvasWidth, canvasHeight)
+        context.drawImage(bgImage, 0, 0, canvasWidth, canvasHeight)
         for (var i = 0; i < options.particleCount; i++) {
             particles[i].draw()
         }

@@ -30,8 +30,8 @@ export const Main = styled.div`
 
 export const BGImage = styled.img`
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: ${window.innerWidth}px;
+    height: ${window.innerHeight}px;
     top: 0;
     left: 0;
 `
@@ -184,6 +184,7 @@ export const ContextMenuItem = styled.li`
 `
 export const MoreIcon = styled(MoreVertIcon)`
     margin-top: 10px;
+    color: #4b4b4b;
     &:hover {
         cursor: pointer;
     }
