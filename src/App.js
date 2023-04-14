@@ -48,10 +48,12 @@ const App = () => {
     const deleteHandler = () => {
         setMessages([])
         messagesTemp = []
+        socket.emit('stop', uid)
         socket.emit('delete', uid)
     }
 
-    const handleTabClose = (e) => {
+    const handleTabClose = () => {
+        socket.emit('stop', uid)
         socket.emit('deleteUser', uid)
     }
 
