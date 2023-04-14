@@ -48,12 +48,15 @@ const App = () => {
     const deleteHandler = () => {
         setMessages([])
         messagesTemp = []
-        setContextMenu(false)
         socket.emit('delete', uid)
     }
 
     const handleTabClose = (e) => {
         socket.emit('deleteUser', uid)
+    }
+
+    const stopHandler = () => {
+        socket.emit('stop', uid)
     }
 
     const enterHandler = (e) => {
@@ -76,6 +79,9 @@ const App = () => {
                     )
             }, 500)
             window.addEventListener('beforeunload', handleTabClose)
+            document.addEventListener('click', () => {
+                setContextMenu(false)
+            })
             window.addEventListener('resize', () => {
                 let main = document.querySelector('.main')
                 main.style.width = window.innerWidth + 'px'
@@ -165,6 +171,7 @@ const App = () => {
         setTimeout(() => {
             animateScroll.scrollToBottom({
                 smooth: true,
+                duration: 200,
                 containerId: 'ContainerElementID',
             })
         }, 0)
@@ -192,7 +199,12 @@ const App = () => {
                     <S.HeaderRight>
                         <S.MoreIcon
                             sx={{ fontSize: 40 }}
-                            onClick={() => setContextMenu(!contextMenu)}
+                            onClick={() =>
+                                setTimeout(
+                                    () => setContextMenu(!contextMenu),
+                                    0
+                                )
+                            }
                         />
                         <S.ContextMenu contextMenu={contextMenu}>
                             <S.ContextMenuList>
@@ -200,6 +212,11 @@ const App = () => {
                                     onClick={() => deleteHandler()}
                                 >
                                     Удалить
+                                </S.ContextMenuItem>
+                                <S.ContextMenuItem
+                                    onClick={() => stopHandler()}
+                                >
+                                    Остановить
                                 </S.ContextMenuItem>
                             </S.ContextMenuList>
                         </S.ContextMenu>

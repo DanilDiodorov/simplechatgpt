@@ -171,11 +171,12 @@ export const HeaderStatus = styled.div`
 `
 export const ContextMenu = styled.div`
     display: ${({ contextMenu }) => (contextMenu ? 'block' : 'none')};
-    width: 100px;
+    width: 200px;
     background-color: ${colors.white};
     position: absolute;
     border-radius: 10px;
-    margin-left: -80px;
+    margin-left: -170px;
+    box-shadow: 0 0 20px rgb(0, 0, 0, 0.3);
 `
 export const ContextMenuList = styled.ul`
     padding: 0;
@@ -185,6 +186,8 @@ export const ContextMenuList = styled.ul`
 export const ContextMenuItem = styled.li`
     padding: 15px;
     border-radius: 10px;
+    text-align: center;
+    transition: all 0.2s ease;
     &:hover {
         cursor: pointer;
         background-color: #c0c0c0;
