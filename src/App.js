@@ -100,24 +100,11 @@ const App = () => {
                     ? 'https://simplechatgpt-api.onrender.com'
                     : 'http://localhost:10000',
                 {
-                    reconnection: true, // Включить повторное подключение
-                    reconnectionDelay: 500, // Задержка между попытками переподключения
+                    reconnection: true,
+                    reconnectionDelay: 500,
                 }
             )
             socket.on('message', (data) => {
-                // if (data.uid === uid && waiting === true) {
-                //     setLoading(false)
-                //     messagesTemp = [
-                //         ...messagesTemp,
-                //         {
-                //             isMy: false,
-                //             text: data.message,
-                //         },
-                //     ]
-                //     socket.emit('recieved', uid)
-                //     waiting = false
-                //     setMessages(messagesTemp)
-                // }
                 if (data.uid === uid) {
                     if (data.message !== null) {
                         setLoading(false)
@@ -248,6 +235,7 @@ const App = () => {
                 <S.Footer>
                     <S.Input
                         placeholder="Сообщение"
+                        className="input"
                         value={text}
                         onChange={(data) => setText(data.currentTarget.value)}
                         onKeyDown={(e) => enterHandler(e)}

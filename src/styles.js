@@ -77,7 +77,7 @@ export const Footer = styled.div`
     padding: 3px 20px 15px 20px;
 
     @media (max-width: 700px) {
-        padding: 3px 10px 20px 10px;
+        padding: 3px 10px 8px 10px;
     }
 `
 
