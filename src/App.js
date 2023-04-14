@@ -88,6 +88,11 @@ const App = () => {
                 let main = document.querySelector('.main')
                 main.style.width = window.innerWidth + 'px'
                 main.style.height = window.innerHeight + 'px'
+                animateScroll.scrollToBottom({
+                    smooth: false,
+                    duration: 0,
+                    containerId: 'ContainerElementID',
+                })
             })
             setMessages(messagesTemp)
             socket = io(
@@ -96,7 +101,7 @@ const App = () => {
                     : 'http://localhost:10000',
                 {
                     reconnection: true, // Включить повторное подключение
-                    reconnectionDelay: 1000, // Задержка между попытками переподключения
+                    reconnectionDelay: 500, // Задержка между попытками переподключения
                 }
             )
             socket.on('message', (data) => {
@@ -225,11 +230,13 @@ const App = () => {
                     </S.HeaderRight>
                 </S.Header>
                 <S.Messages id="ContainerElementID">
-                    {messages.map((message) => (
-                        <S.Message isMy={message.isMy}>
-                            {message.text}
-                        </S.Message>
-                    ))}
+                    {messages.map((message) => {
+                        return (
+                            <S.Message isMy={message.isMy}>
+                                {message.text}
+                            </S.Message>
+                        )
+                    })}
                     {loading ? (
                         <S.Message isMy={false}>
                             <Loader />

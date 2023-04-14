@@ -16,16 +16,20 @@ function game() {
         lineWidth: 2,
     }
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-    })
-
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
     var canvasWidth = canvas.width
     var canvasHeight = canvas.height
+
+    window.addEventListener('resize', () => {
+        canvas.style.width = window.innerWidth + 'px'
+        canvas.style.height = window.innerHeight + 'px'
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        canvasWidth = canvas.width
+        canvasHeight = canvas.height
+    })
 
     class Particle {
         constructor() {

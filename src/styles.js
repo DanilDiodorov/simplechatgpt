@@ -8,7 +8,7 @@ export const colors = {
 }
 
 export const GlobalStyle = createGlobalStyle`
-    body{
+    html body{
         margin: 0;
         padding: 0;
         overflow: hidden;
@@ -74,7 +74,7 @@ export const Messages = styled.div`
 export const Footer = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 3px 20px 20px 20px;
+    padding: 3px 20px 15px 20px;
 
     @media (max-width: 700px) {
         padding: 3px 10px 20px 10px;
@@ -84,11 +84,11 @@ export const Footer = styled.div`
 export const Input = styled.textarea`
     height: 35px;
     width: 83%;
-    padding: 15px 20px 0 20px;
+    padding: 13px 20px 0 20px;
     resize: none;
     border: none;
     background-color: ${colors.white};
-    border-radius: 20px;
+    border-radius: 30px;
     font-size: 18px;
     box-shadow: 0 0 10px rgb(0, 0, 0, 0.2);
 
