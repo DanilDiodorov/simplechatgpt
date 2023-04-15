@@ -75,6 +75,7 @@ export const Footer = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 3px 20px 15px 20px;
+    align-items: flex-end;
 
     @media (max-width: 700px) {
         padding: 3px 10px 8px 10px;
@@ -82,7 +83,6 @@ export const Footer = styled.div`
 `
 
 export const Input = styled.textarea`
-    height: 35px;
     width: 83%;
     padding: 13px 20px 0 20px;
     resize: none;

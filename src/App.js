@@ -69,6 +69,14 @@ const App = () => {
     }
 
     useEffect(() => {
+        const textarea = document.querySelector('.input')
+        if (textarea.scrollHeight < 120) {
+            textarea.style.height = 'auto'
+            textarea.style.height = textarea.scrollHeight - 25 + 'px'
+        }
+    }, [text])
+
+    useEffect(() => {
         if (isMounted === false) {
             setInterval(() => {
                 if (isSending)
@@ -232,7 +240,7 @@ const App = () => {
                         <></>
                     )}
                 </S.Messages>
-                <S.Footer>
+                <S.Footer className="footer">
                     <S.Input
                         placeholder="Сообщение"
                         className="input"
