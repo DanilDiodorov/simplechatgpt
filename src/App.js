@@ -70,7 +70,15 @@ const App = () => {
 
     useEffect(() => {
         const textarea = document.querySelector('.input')
-        if (textarea.scrollHeight < 120) {
+        if (textarea.scrollHeight > textarea.offsetHeight) {
+            let height = textarea.scrollHeight
+            if (textarea.scrollHeight > 120) {
+                height = 110
+            } else {
+                textarea.style.height = 'auto'
+            }
+            textarea.style.height = height - 25 + 'px'
+        } else {
             textarea.style.height = 'auto'
             textarea.style.height = textarea.scrollHeight - 25 + 'px'
         }
